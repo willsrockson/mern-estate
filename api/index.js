@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
+const userRouter = require("./routes/user");
 const app = express();
 
 //connected to Database through dot env
@@ -37,6 +38,8 @@ const userSchema = new mongoose.Schema(
 
 // Creating a model out of blueprint
 const User = new mongoose.model("User", userSchema);
+
+app.use("/api/user", userRouter);
 
 // The port of the backend
 app.listen(3000, () => {
