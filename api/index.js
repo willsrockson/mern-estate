@@ -14,6 +14,30 @@ mongoose
         console.log(err);
     });
 
+// creating the bluePrint
+const userSchema = new mongoose.Schema(
+    {
+        username: {
+            type: String,
+            required: true,
+            unique: true,
+        },
+        email: {
+            type: String,
+            required: true,
+            unique: true,
+        },
+        password: {
+            type: String,
+            required: true,
+        },
+    },
+    { timestamps: true } // Timestamps saves the current time of the document created
+);
+
+// Creating a model out of blueprint
+const User = new mongoose.model("User", userSchema);
+
 // The port of the backend
 app.listen(3000, () => {
     console.log("Backend is running on port 3000");
