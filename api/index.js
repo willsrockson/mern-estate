@@ -1,9 +1,12 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 dotenv.config();
-const userRouter = require("./routes/user");
+//imported Routes from the routes folder
+import userRouter from "./routes/user.js";
+import authRouter from "./routes/auth.js";
 const app = express();
+app.use(express.json()); // Allow post request in json format.. if not for this, then body parser must be used
 
 //connected to Database through dot env
 mongoose
@@ -37,9 +40,10 @@ const userSchema = new mongoose.Schema(
 );
 
 // Creating a model out of blueprint
-const User = new mongoose.model("User", userSchema);
+export const User = new mongoose.model("User", userSchema);
 
 app.use("/api/user", userRouter);
+app.use("/api/auth", authRouter);
 
 // The port of the backend
 app.listen(3000, () => {
