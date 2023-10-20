@@ -44,6 +44,15 @@ export const User = new mongoose.model("User", userSchema);
 
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
+app.use((err, req, res, next) => {
+    const statusCode = err.statusCode || 500;
+    const message = err.message || "there was an internal error";
+    res.status(statusCode).json({
+        success: false,
+        statusCode,
+        message,
+    });
+});
 
 // The port of the backend
 app.listen(3000, () => {
